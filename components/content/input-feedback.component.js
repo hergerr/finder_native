@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'red',
     fontSize: 15,
-    marginBottom: 10,
+    marginBottom: 5,
   }
 })
 

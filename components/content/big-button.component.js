@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.custom_orange,
     borderRadius: 5,
     paddingHorizontal: 90,
-    paddingVertical: 15
+    paddingVertical: 10
   },
 
   button_content: {
