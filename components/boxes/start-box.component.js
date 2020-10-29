@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ImageBackground, View, Text, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, ImageBackground, View, Text } from 'react-native';
 
 import { Burger } from '../content/burger.component'
 import { COLORS } from '../../colors';

@@ -4,24 +4,15 @@ import { Formik } from 'formik';
 
 import { StartBox } from '../components/boxes/start-box.component';
 import { BigButton } from '../components/content/big-button.component';
+import { BigInput } from '../components/content/big-input.component'
 
 const styles = StyleSheet.create({
   container: {
     marginTop: 'auto',
     marginBottom: 70
   },
-
-  input: {
-    alignSelf: "stretch",
-    backgroundColor: 'rgba(0,0,0,0.4)', // 40% opaque
-    borderColor: 'black',
-    borderWidth: 2,
-    color: 'white',
-    borderRadius: 5,
-    opacity: 30,
-    marginBottom: 30,
-  }
 })
+
 
 export const LoginScreen = (props) => {
 
@@ -33,25 +24,25 @@ export const LoginScreen = (props) => {
             login: '',
             password: '',
           }}
-          onSubmit={values => console.log(values)}
-        >
+          onSubmit={(values, actions) => {
+            console.log(values)
+            actions.resetForm()
+          }
+          }>
+
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <View style={styles.inputs_wrapper}>
-              <TextInput
+              <BigInput
                 onChangeText={handleChange('login')}
                 onBlur={handleBlur('login')}
                 value={values.login}
-                style={styles.input}
                 placeholder="Login"
-                placeholderTextColor="#fff"
               />
-              <TextInput
+              <BigInput
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
                 value={values.password}
-                style={styles.input}
                 placeholder="Password"
-                placeholderTextColor="#fff"
                 secureTextEntry={true}
               />
               <BigButton onPress={handleSubmit} title="Submit" />
