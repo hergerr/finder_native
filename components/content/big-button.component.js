@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 export const BigButton = (props) => {
 
   return (
-    <TouchableOpacity activeOpacity={0.5} style={styles.button}>
+    <TouchableOpacity onPress={props.onPress} activeOpacity={0.5} style={styles.button}>
       <Text style={styles.button_content}>{props.title}</Text>
     </TouchableOpacity>
   )
