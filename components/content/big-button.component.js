@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { COLORS } from '../colors';
+import { COLORS } from '../../colors';
 
 const styles = StyleSheet.create({
   button: {
@@ -20,9 +20,7 @@ const styles = StyleSheet.create({
 export const BigButton = (props) => {
 
   return (
-    <TouchableOpacity
-      style={styles.button}>
-
+    <TouchableOpacity activeOpacity={0.5} style={styles.button}>
       <Text style={styles.button_content}>{props.title}</Text>
     </TouchableOpacity>
   )

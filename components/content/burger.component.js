@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { useNavigation } from '@react-navigation/native';
 
-import { COLORS } from '../colors';
+import { COLORS } from '../../colors';
 
 export const Burger = (props) => {
 
