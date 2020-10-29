@@ -3,6 +3,7 @@ import { View, Text, ImageBackground, StyleSheet } from 'react-native';
 
 import { COLORS } from '../colors';
 import { Burger } from '../components/burger.component';
+import { BigButton } from '../components/big-button.component';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,6 +33,14 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+  },
+
+  description: {
+    fontSize: 30,
+    marginTop: 200,
+    marginBottom: 50,
+    fontFamily: "NovaSlim-Regular",
+    color: 'white'
   }
 });
 
@@ -46,6 +55,8 @@ export const HomeScreen = (props) => {
           <Burger />
           <Text style={styles.title}>finder</Text>
         </View>
+        <Text style={styles.description}>Find flatmates in Wrocław</Text>
+        <BigButton title="Search"/>
       </ImageBackground>
     </View>
   )
