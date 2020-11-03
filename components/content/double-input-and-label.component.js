@@ -33,12 +33,12 @@ export const DoubleInputAndLabel = (props) => {
       <View style={styles.row}>
         <View style={styles.column}>
           <Text style={styles.label}>from</Text>
-          <TextInput style={styles.input} />
+          <TextInput keyboardType="number-pad" style={styles.input} />
         </View>
 
         <View>
           <Text style={styles.label}>to</Text>
-          <TextInput style={styles.input} />
+          <TextInput keyboardType="number-pad" style={styles.input} />
         </View>
       </View>
     </View>
