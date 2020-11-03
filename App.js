@@ -6,6 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { HomeScreen } from './screens/home.screen';
 import { LoginScreen } from './screens/login.screen';
 import { RegisterScreen } from './screens/register.screen';
+import { SearchScreen } from './screens/search.screen';
 
 const Drawer = createDrawerNavigator();
 
@@ -16,6 +17,7 @@ const App = () => {
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Login" component={LoginScreen} />
         <Drawer.Screen name="Register" component={RegisterScreen} />
+        <Drawer.Screen name="Search" component={SearchScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
