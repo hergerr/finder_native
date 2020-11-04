@@ -23,14 +23,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
 
-  heart: {
+  heart_wrapper: {
     marginTop: 'auto',
     marginBottom: 'auto',
+    marginLeft: 'auto'
   }
 })
 
 const HeartButtom = (props) => (
-  <Icon.Button name="hearto" style={styles.heart} backgroundColor="white" color="black" />
+  <Icon.Button name="hearto" backgroundColor="white" color="black" />
 );
 
 
@@ -49,7 +50,9 @@ export const ListCard = (props) => {
         <Text>#quiet #gamer #nerd</Text>
         <Text>#always cleaning #up early</Text>
       </View>
-      <HeartButtom/>
+      <View style={styles.heart_wrapper}>
+        <HeartButtom />
+      </View>
 
     </View>
   )
