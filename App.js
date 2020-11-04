@@ -8,6 +8,7 @@ import { LoginScreen } from './screens/login.screen';
 import { RegisterScreen } from './screens/register.screen';
 import { SearchScreen } from './screens/search.screen';
 import { ListScreen } from './screens/list.screen';
+import { DetailScreen } from './screens/detail.screen';
 
 const Drawer = createDrawerNavigator();
 
@@ -22,6 +23,7 @@ const App = () => {
 
         {/* temporary */}
         <Drawer.Screen name="ListScreen" component={ListScreen} />
+        <Drawer.Screen name="DetailScreen" component={DetailScreen} />
         
       </Drawer.Navigator>
     </NavigationContainer>

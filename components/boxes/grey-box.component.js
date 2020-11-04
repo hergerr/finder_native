@@ -1,19 +1,19 @@
 import React from 'react';
-import { View, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Burger } from '../content/burger.component';
 
 const styles = StyleSheet.create({
   container: {
-
+    flex: 1,
   }
 })
 
 export const GreyBox = (props) => {
 
   return (
-    <KeyboardAvoidingView style={styles.container}  behavior={"position"}>
+    <ScrollView style={styles.container}>
       <Burger />
       {props.children}
-    </KeyboardAvoidingView>
+    </ScrollView>
   )
 }
