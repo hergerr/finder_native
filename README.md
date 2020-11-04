@@ -14,3 +14,6 @@ npx react-native link
 
 # reload emulator
 ```
+
+TODO:
+- 'search', 'delete' and 'liked' list views should be based on some kind of HOC

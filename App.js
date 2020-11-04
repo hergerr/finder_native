@@ -10,6 +10,7 @@ import { SearchScreen } from './screens/search.screen';
 import { ListScreen } from './screens/list.screen';
 import { DetailScreen } from './screens/detail.screen';
 import { MessageListScreen } from './screens/message-list.screen';
+import { MessageDetail } from './screens/message-detail.screen';
 
 const Drawer = createDrawerNavigator();
 
@@ -26,6 +27,7 @@ const App = () => {
         <Drawer.Screen name="ListScreen" component={ListScreen} />
         <Drawer.Screen name="DetailScreen" component={DetailScreen} />
         <Drawer.Screen name="MessageListScreen" component={MessageListScreen} />
+        <Drawer.Screen name="MessageDetail" component={MessageDetail} />
         
       </Drawer.Navigator>
     </NavigationContainer>
