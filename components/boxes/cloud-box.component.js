@@ -18,7 +18,7 @@ export const CloudBox = (props) => {
       }
     } else {
       return {
-        paddingVertical: 10,
+        padding: 10,
         alignSelf: 'flex-end',
         marginRight: 10,
         width: '40%',
