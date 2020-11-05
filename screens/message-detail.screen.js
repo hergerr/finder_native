@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, ScrollView, StyleSheet, TextInput } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -29,22 +29,36 @@ const styles = StyleSheet.create({
   },
 
   cloud_wrapper: {
-    marginTop: 10
+    marginTop: 10,
+    marginBottom: 10
   }
 
 })
 
 export const MessageDetail = (props) => {
+  const scrollViewRef = useRef();
 
   return (
     <GreyBox>
-      <ScrollView style={styles.message_container}>
+      <ScrollView
+        style={styles.message_container}
+        ref={scrollViewRef}
+        onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+      >
         <View style={styles.cloud_wrapper}>
           <CloudBox type="send" />
         </View>
         <View style={styles.cloud_wrapper}>
           <CloudBox type="received" />
+        </View>
+        <View style={styles.cloud_wrapper}>
           <CloudBox type="send" />
+        </View>
+        <View style={styles.cloud_wrapper}>
+          <CloudBox type="received" />
+        </View>
+        <View style={styles.cloud_wrapper}>
+          <CloudBox type="received" />
         </View>
         <View style={styles.cloud_wrapper}>
           <CloudBox type="send" />
