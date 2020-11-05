@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { GreyBox } from '../components/boxes/grey-box.component';
 import { SmallButton } from '../components/content/small-button.component';
 import { InputFeedback } from '../components/content/input-feedback.component';
+import { CloudBox } from '../components/boxes/cloud-box.component';
 
 const styles = StyleSheet.create({
   message_container: {
@@ -25,6 +26,10 @@ const styles = StyleSheet.create({
     width: 200,
     height: 50,
     marginRight: 20
+  },
+
+  cloud_wrapper: {
+    marginTop: 10
   }
 
 })
@@ -34,7 +39,16 @@ export const MessageDetail = (props) => {
   return (
     <GreyBox>
       <ScrollView style={styles.message_container}>
-
+        <View style={styles.cloud_wrapper}>
+          <CloudBox type="send" />
+        </View>
+        <View style={styles.cloud_wrapper}>
+          <CloudBox type="received" />
+          <CloudBox type="send" />
+        </View>
+        <View style={styles.cloud_wrapper}>
+          <CloudBox type="send" />
+        </View>
       </ScrollView>
       <Formik
         initialValues={{
