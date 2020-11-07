@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import ImagePicker from 'react-native-image-picker';
+import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import { Formik } from 'formik';
 
 import { GreyBox } from '../components/boxes/grey-box.component';
@@ -17,11 +18,58 @@ const styles = StyleSheet.create({
   },
 
   button_wrapper: {
-    marginTop: 15
+    marginVertical: 15
+  }, 
+
+  profile_photo: {
+    width: 100,
+    height: 100,
+    marginVertical: 10
+  },
+
+  photo_button: {
+    backgroundColor: 'lightgray',
+    alignItems: "center",
+    justifyContent: 'center',
+    width: 100,
+    height: 40,
+    marginVertical: 10,
+    borderRadius: 5
+  },
+
+  button_text: {
+    color: 'black'
   }
 })
 
 export const AddScreen = (props) => {
+  var [fileUri, SetFileuri] = useState()
+
+  // https://swairaq.medium.com/image-picker-in-react-native-74ab25da57b3
+  const chooseImage = () => {
+    let options = {
+      title: 'Select Avatar',
+      cameraType: 'front',
+      mediaType: 'photo',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        SetFileuri(response.uri) //update state to update Image
+      }
+    });
+  }
 
   return (
     <GreyBox>
@@ -49,6 +97,14 @@ export const AddScreen = (props) => {
               {touched.age && errors.age ? (
                 <InputFeedback text={errors.age} />
               ) : <InputFeedback text="" />}
+              <Image
+                style={styles.profile_photo}
+                source={fileUri ? { uri: fileUri } : // if clicked a new img
+                  require('../assets/images/default.jpg')} //else show random
+              />
+              <TouchableOpacity onPress={chooseImage} style={styles.photo_button}>
+                <Text style={styles.button_text}>Add Photo</Text>
+              </TouchableOpacity>
               <InputAndLabel label="District"
                 onChangeText={handleChange('district')}
                 onBlur={handleBlur('district')}
