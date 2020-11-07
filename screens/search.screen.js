@@ -7,6 +7,7 @@ import { InputAndLabel } from '../components/content/input-and-label.component';
 import { DoubleInputAndLabel } from '../components/content/double-input-and-label.component'
 import { BigButton } from '../components/content/big-button.component';
 import { InputFeedback } from '../components/content/input-feedback.component';
+import { ListScreen } from './list.screen';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,22 +38,30 @@ export const SearchScreen = (props) => {
         <Text style={styles.title}>Search flatmates</Text>
         <Formik
           initialValues={{
-            ageFrom: 0,
-            ageTo: 100,
+            ageFrom: '',
+            ageTo: '',
             district: '',
             keyFeatures: '',
             keyCustoms: ''
           }}
 
           onSubmit={(values, actions) => {
-            console.log(values)
-            actions.resetForm()
+            props.navigation.navigate('ListScreen', {
+              searchParams: values
+            })
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
 
             <View style={styles.form_wrapper}>
-              <DoubleInputAndLabel title="Age" />
+              <DoubleInputAndLabel title="Age"
+                fromOnChangeText={handleChange('ageFrom')}
+                fromOnBlur={handleBlur('ageFrom')}
+                fromValue={values.ageFrom}
+                toOnChangeText={handleChange('ageTo')}
+                toOnBlur={handleBlur('ageTo')}
+                toValue={values.ageTo}
+              />
               <InputAndLabel label="District"
                 onChangeText={handleChange('district')}
                 onBlur={handleBlur('district')}

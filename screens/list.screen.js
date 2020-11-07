@@ -18,6 +18,10 @@ const styles = StyleSheet.create({
 
 export const ListScreen = (props) => {
 
+  const x = props.route.params;
+
+  console.log(x);
+
   return (
     <GreyBox>
       <View style={styles.container}>

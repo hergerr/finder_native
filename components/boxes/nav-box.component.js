@@ -16,7 +16,7 @@ const styles  = StyleSheet.create({
 export const NavBox = (props) => {
 
   return (
-    <TouchableOpacity activeOpacity={0.5} style={styles.container}>
+    <TouchableOpacity activeOpacity={0.5} style={styles.container} onPress={props.onPress}>
       {props.children}
     </TouchableOpacity>
   )

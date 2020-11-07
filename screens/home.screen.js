@@ -66,13 +66,13 @@ export const HomeScreen = (props) => {
   return (
     <StartBox>
       <Text style={styles.description}>Find flatmates in Wrocław</Text>
-      <BigButton title="Search" />
+      <BigButton title="Search" onPress={() => props.navigation.navigate('Search')}/>
       <View style={styles.box_container}>
-        <NavBox>
+        <NavBox onPress={() => props.navigation.navigate('Login')}>
           <Icon name='unlock' size={50} color="white"></Icon>
           <Text style={styles.box_desc}>Log in</Text>
         </NavBox>
-        <NavBox>
+        <NavBox onPress={() => props.navigation.navigate('Register')}>
           <Icon name='book' size={50} color="white"></Icon>
           <Text style={styles.box_desc}>Register</Text>
         </NavBox>

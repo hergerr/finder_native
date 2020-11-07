@@ -17,7 +17,7 @@ export const InputAndLabel = (props) => {
   return (
     <View>
       <Text style={styles.label}>{props.label}</Text>
-      <TextInput style={styles.input}/>
+      <TextInput style={styles.input} {...props}/>
     </View>
   )
 

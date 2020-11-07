@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 10
   },
-  
+
   title: {
     marginBottom: 10
   }
@@ -33,12 +33,23 @@ export const DoubleInputAndLabel = (props) => {
       <View style={styles.row}>
         <View style={styles.column}>
           <Text style={styles.label}>from</Text>
-          <TextInput keyboardType="number-pad" style={styles.input} />
+          <TextInput
+            keyboardType="number-pad"
+            style={styles.input}
+            value={props.fromValue}
+            onBlur={props.fromOnBlur}
+            onChangeText={props.fromOnChangeText}
+          />
         </View>
 
         <View>
           <Text style={styles.label}>to</Text>
-          <TextInput keyboardType="number-pad" style={styles.input} />
+          <TextInput
+            keyboardType="number-pad"
+            style={styles.input}
+            value={props.toValue}
+            onBlur={props.toOnBlur}
+            onChangeText={props.toOnChangeText} />
         </View>
       </View>
     </View>
