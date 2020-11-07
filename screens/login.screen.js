@@ -2,11 +2,14 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { StartBox } from '../components/boxes/start-box.component';
 import { BigButton } from '../components/content/big-button.component';
 import { BigInput } from '../components/content/big-input.component'
 import { InputFeedback } from '../components/content/input-feedback.component';
+import { static_host } from '../settings';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +38,15 @@ export const LoginScreen = (props) => {
           })}
 
           onSubmit={(values, actions) => {
-            console.log(values)
+            axios.post(`${static_host}/token/`, { username: values.login, password: values.password })
+              .then(async res => {
+                if (res.status === 200) {
+                  await AsyncStorage.setItem('access', res.data.access);
+                  props.navigation.navigate('MessageListScreen');
+                }
+              }).catch(error => {
+                console.log('Error occured in login');
+              });
             actions.resetForm()
           }
           }>
@@ -49,7 +60,7 @@ export const LoginScreen = (props) => {
                 placeholder="Login"
               />
               {touched.login && errors.login ? (
-                <InputFeedback text={errors.login}/>
+                <InputFeedback text={errors.login} />
               ) : <InputFeedback text="" />}
               <BigInput
                 onChangeText={handleChange('password')}
