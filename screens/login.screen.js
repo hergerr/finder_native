@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { showToast } from '../settings';
 
 import { StartBox } from '../components/boxes/start-box.component';
 import { BigButton } from '../components/content/big-button.component';
@@ -45,7 +46,7 @@ export const LoginScreen = (props) => {
                   props.navigation.navigate('MessageListScreen');
                 }
               }).catch(error => {
-                console.log('Error occured in login');
+                showToast('Error occured in login');
               });
             actions.resetForm()
           }

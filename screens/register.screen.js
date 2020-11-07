@@ -2,11 +2,13 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 import { StartBox } from '../components/boxes/start-box.component';
 import { BigButton } from '../components/content/big-button.component';
 import { BigInput } from '../components/content/big-input.component'
 import { InputFeedback } from '../components/content/input-feedback.component';
+import { showToast, static_host } from '../settings';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +43,23 @@ export const RegisterScreen = (props) => {
           })}
 
           onSubmit={(values, actions) => {
-            console.log(values)
+            axios.post(`${static_host}/accounts/register/`,
+              { username: values.username, email: values.email, password: values.password, password_confirm: values.password })
+              .then(res => {
+                if (res.status === 201) {
+                  showToast("Registration was succesful. Now confirm your account by clicking URL sent to your email.")
+                }
+              }).catch(error => {
+                const errors = error.response.data;
+                let message = '';
+                for (const type in errors) {
+                  message = message.concat(`${errors[type]}`)
+                }
+                message = message.replace(/,/g, '\n');
+                showToast('Registration errors occured')
+                showToast(message);
+                console.log(message);
+              });
             actions.resetForm()
           }
           }>
