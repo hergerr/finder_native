@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -10,7 +10,7 @@ import { StartBox } from '../components/boxes/start-box.component';
 import { BigButton } from '../components/content/big-button.component';
 import { BigInput } from '../components/content/big-input.component'
 import { InputFeedback } from '../components/content/input-feedback.component';
-import { static_host } from '../settings';
+import { static_host, AuthContext } from '../settings';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
 
 
 export const LoginScreen = (props) => {
+
+  const { logIn } = useContext(AuthContext);
 
   return (
     <StartBox>
@@ -40,10 +42,9 @@ export const LoginScreen = (props) => {
 
           onSubmit={(values, actions) => {
             axios.post(`${static_host}/token/`, { username: values.login, password: values.password })
-              .then(async res => {
+              .then(res => {
                 if (res.status === 200) {
-                  await AsyncStorage.setItem('access', res.data.access);
-                  console.log('sukces');
+                  logIn(res.data.access);
                 }
               }).catch(error => {
                 showToast('Error occured in login');

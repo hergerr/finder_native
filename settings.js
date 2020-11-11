@@ -1,3 +1,4 @@
+import { createContext } from 'react';
 import { ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -19,4 +20,7 @@ const isSignedIn = async () => {
     console.log(e)
   }
 }
-export { static_host, showToast, isSignedIn } 
+
+const AuthContext = createContext();
+
+export { static_host, showToast, isSignedIn, AuthContext } 
