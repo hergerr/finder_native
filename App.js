@@ -24,7 +24,7 @@ const Drawer = createDrawerNavigator();
 
 const App = () => {
   // https://reactnavigation.org/docs/auth-flow/
-  const [state, dispatch] = useReducer(
+  const [loginState, dispatch] = useReducer(
     (prevState, action) => {
       switch (action.type) {
         case 'LOG_IN':
@@ -73,17 +73,21 @@ const App = () => {
 
   // adding logout option to drawer menu
   function CustomDrawerContent(props) {
-
+    // https://stackoverflow.com/a/62656282/12422260
+    // also why called App state loginState
     const { logOut } = useContext(AuthContext);
+    const { state, ...rest } = props;
+    const newState = { ...state }
+    newState.routes = newState.routes.filter(item =>
+      (item.name !== 'MessageDetail' && item.name !== 'DetailScreen' && item.name !== 'ListScreen'))
 
     return (
       <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
+        <DrawerItemList state={newState} {...rest} />
         {
-          state.logged ? (
+          loginState.logged ? (
             <DrawerItem label="Logout" onPress={async () => {
               logOut();
-              console.log('wylogowano');
             }} />
           ) : (
               <DrawerItem label='' />
@@ -100,24 +104,30 @@ const App = () => {
         <Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawerContent {...props} />}>
           {/* https://reactnavigation.org/docs/auth-flow/ */}
           {
-            state.logged ? (
+            loginState.logged ? (
               <>
+                {/* only user - visible */}
                 <Drawer.Screen name="MessageListScreen" component={MessageListScreen} />
-                <Drawer.Screen name="ListScreen" component={ListScreen} />
-                <Drawer.Screen name="DetailScreen" component={DetailScreen} />
-                <Drawer.Screen name="MessageDetail" component={MessageDetail} />
                 <Drawer.Screen name="AddScreen" component={AddScreen} />
+
+                {/* only user - invisible */}
+                <Drawer.Screen name="MessageDetail" component={MessageDetail} />
 
               </>
             ) : (
                 <>
+                  {/* only guest - visible */}
                   <Drawer.Screen name="Home" component={HomeScreen} />
                   <Drawer.Screen name="Login" component={LoginScreen} options={{ icon: 'home' }} />
                   <Drawer.Screen name="Register" component={RegisterScreen} />
                 </>
               )
           }
+          {/* always - visible */}
           <Drawer.Screen name="Search" component={SearchScreen} />
+          {/* always - invisible */}
+          <Drawer.Screen name="ListScreen" component={ListScreen} />
+          <Drawer.Screen name="DetailScreen" component={DetailScreen} />
 
         </Drawer.Navigator>
       </AuthContext.Provider>
