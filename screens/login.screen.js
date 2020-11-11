@@ -43,7 +43,7 @@ export const LoginScreen = (props) => {
               .then(async res => {
                 if (res.status === 200) {
                   await AsyncStorage.setItem('access', res.data.access);
-                  props.navigation.navigate('MessageListScreen');
+                  console.log('sukces');
                 }
               }).catch(error => {
                 showToast('Error occured in login');
