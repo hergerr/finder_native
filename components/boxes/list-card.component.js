@@ -1,6 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+
+import { static_host } from '../../settings';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,24 +39,33 @@ const HeartButtom = (props) => (
 
 
 export const ListCard = (props) => {
+  const url = `${static_host}${props.image}`;
+  const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.5}
+      onPress={() => {
+        navigation.navigate('DetailScreen', {
+          id: props.id
+        })
+      }}>
       <Image
         style={styles.profile_photo}
-        source={require('../../assets/images/example.jpg')}
+        source={{ uri: url }}
       />
       <View style={styles.desc}>
-        <Text style={styles.title}>Peaceful piwniczak</Text>
-        <Text>32</Text>
-        <Text>Krzyki</Text>
-        <Text>#quiet #gamer #nerd</Text>
-        <Text>#always cleaning #up early</Text>
+        <Text style={styles.title}>{props.title}</Text>
+        <Text>{props.age}</Text>
+        <Text>{props.location}</Text>
+        <Text>#{props.features.replace(/;/g, ' #')}</Text>
+        <Text>#{props.customs.replace(/;/g, ' #')}</Text>
       </View>
       <View style={styles.heart_wrapper}>
         <HeartButtom />
       </View>
 
-    </View>
+    </TouchableOpacity>
   )
 }

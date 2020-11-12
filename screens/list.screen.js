@@ -37,7 +37,7 @@ export const ListScreen = (props) => {
   if (data) {
     list = data.map((element, index) => {
       return <View style={styles.card_wrapper} key={index}>
-        <ListCard />
+        <ListCard {...element}/>
       </View>
     })
   }
