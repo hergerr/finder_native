@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput, Image } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 import { GreyBox } from '../components/boxes/grey-box.component';
 import { SmallButton } from '../components/content/small-button.component';
 import { InputFeedback } from '../components/content/input-feedback.component';
+import { static_host } from '../settings';
 
 const styles = StyleSheet.create({
   title: {
@@ -61,36 +63,56 @@ const styles = StyleSheet.create({
   }
 })
 
-export const DetailScreen = () => {
+export const DetailScreen = (props) => {
+  const id = props.route.params.id;
+  const [data, setData] = useState({});
+  const url = `${static_host}/mate_offer_detail/${id}`
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(url);
+      setData(result.data);
+    }
+    fetchData();
+  }, [url])
+
+  console.log(data);
+
+  let features = null, customs = null;
+  if (data !== {}) {
+    features = data.features.split(';').map((element, index) => (
+      <Text style={styles.section_content} key={index}>{element}</Text>
+    ))
+    customs = data.customs.split(';').map((element, index) => (
+      <Text style={styles.section_content} key={index}>{element}</Text>
+    ))
+  }
+
   return (
     <GreyBox>
       <View>
-        <Text style={styles.title}>Peaceful Piwniczak</Text>
+        <Text style={styles.title}>{data.title}</Text>
         <Image
           style={styles.profile_photo}
-          source={require('../assets/images/example.jpg')}
+          source={{ uri: `${static_host}${data.image}` }}
         />
         <View style={styles.overview}>
-          <Text>32</Text>
-          <Text>Computer Science</Text>
-          <Text>Krzyki</Text>
+          <Text>{data.age}</Text>
+          <Text>{data.field_of_study}</Text>
+          <Text>{data.location}</Text>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.section_title}>Features</Text>
           <View >
-            <Text style={styles.section_content}>quiet</Text>
-            <Text style={styles.section_content}>gamer</Text>
-            <Text style={styles.section_content}>nerd</Text>
+            {features}
           </View>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.section_title}>Customs</Text>
           <View >
-            <Text style={styles.section_content}>always cleaning</Text>
-            <Text style={styles.section_content}>up early</Text>
-            <Text style={styles.section_content}>no parties</Text>
+            {customs}
           </View>
         </View>
       </View>
@@ -98,7 +120,7 @@ export const DetailScreen = () => {
       <View style={styles.section}>
         <Text style={styles.section_title}>Contact</Text>
         <View >
-          <Text style={styles.section_content}>533 354 345</Text>
+          <Text style={styles.section_content}>{data.phone}</Text>
           <Formik
             initialValues={{
               message: ''
