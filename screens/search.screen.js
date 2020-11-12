@@ -38,8 +38,8 @@ export const SearchScreen = (props) => {
         <Text style={styles.title}>Search flatmates</Text>
         <Formik
           initialValues={{
-            ageFrom: '',
-            ageTo: '',
+            ageFrom: '1',
+            ageTo: '100',
             district: '',
             keyFeatures: '',
             keyCustoms: ''
