@@ -23,4 +23,6 @@ const isSignedIn = async () => {
 
 const AuthContext = createContext();
 
-export { static_host, showToast, isSignedIn, AuthContext } 
+const isEmpty = (obj) => (Object.keys(obj).length === 0);
+
+export { static_host, showToast, isSignedIn, AuthContext, isEmpty } 

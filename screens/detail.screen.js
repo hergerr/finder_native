@@ -7,7 +7,7 @@ import axios from 'axios';
 import { GreyBox } from '../components/boxes/grey-box.component';
 import { SmallButton } from '../components/content/small-button.component';
 import { InputFeedback } from '../components/content/input-feedback.component';
-import { static_host } from '../settings';
+import { static_host, isEmpty } from '../settings';
 
 const styles = StyleSheet.create({
   title: {
@@ -76,8 +76,10 @@ export const DetailScreen = (props) => {
     fetchData();
   }, [url])
 
-  let features = null, customs = null;
-  if (data !== {}) {
+  let features = <Text>{''}</Text>;
+  let customs = <Text>{''}</Text>;
+
+  if (!isEmpty(data)) {
     features = data.features.split(';').map((element, index) => (
       <Text style={styles.section_content} key={index}>{element}</Text>
     ))

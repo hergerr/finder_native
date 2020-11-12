@@ -4,8 +4,7 @@ import axios from 'axios';
 
 import { GreyBox } from '../components/boxes/grey-box.component';
 import { ListCard } from '../components/boxes/list-card.component';
-import { static_host } from '../settings';
-import { TextInput } from 'react-native-gesture-handler';
+import { static_host, isEmpty } from '../settings';
 
 const styles = StyleSheet.create({
   container: {

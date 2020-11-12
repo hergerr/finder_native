@@ -107,8 +107,8 @@ const App = () => {
             loginState.logged ? (
               <>
                 {/* only user - visible */}
-                <Drawer.Screen name="MessageListScreen" component={MessageListScreen} />
-                <Drawer.Screen name="AddScreen" component={AddScreen} />
+                <Drawer.Screen name="My Messages" component={MessageListScreen} />
+                <Drawer.Screen name="Add Mate" component={AddScreen} />
 
                 {/* only user - invisible */}
                 <Drawer.Screen name="MessageDetail" component={MessageDetail} />
