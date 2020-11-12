@@ -74,7 +74,6 @@ export const MessageDetail = (props) => {
         })}
 
         onSubmit={(values, actions) => {
-          console.log(values)
           actions.resetForm()
         }}
       >

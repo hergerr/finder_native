@@ -58,7 +58,6 @@ export const RegisterScreen = (props) => {
                 message = message.replace(/,/g, '\n');
                 showToast('Registration errors occured')
                 showToast(message);
-                console.log(message);
               });
             actions.resetForm()
           }

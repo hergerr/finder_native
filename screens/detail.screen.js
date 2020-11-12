@@ -76,8 +76,6 @@ export const DetailScreen = (props) => {
     fetchData();
   }, [url])
 
-  console.log(data);
-
   let features = null, customs = null;
   if (data !== {}) {
     features = data.features.split(';').map((element, index) => (
@@ -131,7 +129,6 @@ export const DetailScreen = (props) => {
             })}
 
             onSubmit={(values, actions) => {
-              console.log(values)
               actions.resetForm()
             }}
           >
