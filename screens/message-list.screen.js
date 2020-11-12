@@ -51,29 +51,23 @@ export const MessageListScreen = (props) => {
     fetchData();
   }, [token])
 
-  console.log(data);
+  let cards = data.map((element, index) => (
+    <View style={styles.message_wrapper} key={index}>
+      <MessageCard
+        id={element.id}
+        key={element.id}
+        subject={element.subject}
+        last_message={element.message.slice(-1)[0].content}
+        email={element.members[1].email}
+      />
+    </View>
+
+  ));
 
   return (
     <GreyBox>
       <View style={styles.wrapper}>
-        <View style={styles.message_wrapper}>
-          <MessageCard />
-        </View>
-        <View style={styles.message_wrapper}>
-          <MessageCard />
-        </View>
-        <View style={styles.message_wrapper}>
-          <MessageCard />
-        </View>
-        <View style={styles.message_wrapper}>
-          <MessageCard />
-        </View>
-        <View style={styles.message_wrapper}>
-          <MessageCard />
-        </View>
-        <View style={styles.message_wrapper}>
-          <MessageCard />
-        </View>
+        {cards}
       </View>
 
     </GreyBox>

@@ -37,6 +37,8 @@ const styles = StyleSheet.create({
 
 export const MessageDetail = (props) => {
   const scrollViewRef = useRef();
+  const id = props.route.params.id;
+  console.log(id);
 
   return (
     <GreyBox>

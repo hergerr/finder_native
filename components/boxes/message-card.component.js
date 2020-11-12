@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { COLORS } from '../../colors';
 
@@ -34,20 +35,25 @@ const styles = StyleSheet.create({
 })
 
 export const MessageCard = (props) => {
+  const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      style={styles.container}
+      onPress={() => {
+        navigation.navigate('MessageDetail', {id: props.id});
+      }}>
       <View>
         <Text style={styles.head}>from</Text>
-        <Text>john.magorty@onet.pl</Text>
+        <Text>{props.email}</Text>
       </View>
 
       <View>
-        <Text style={styles.head}>from</Text>
-        <Text style={styles.subject}>Peaceful Piwniczak</Text>
-        <Text style={styles.content}>Hello, I am interesested in that offer, could
-              you send me more photos of living room and ...</Text>
+        <Text style={styles.head}>message</Text>
+        <Text style={styles.subject}>{props.subject}</Text>
+        <Text style={styles.content}>{props.last_message}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
