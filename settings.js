@@ -10,7 +10,7 @@ const showToast = (text) => {
 
 const isSignedIn = async () => {
   try {
-    const value = await AsyncStorage.getItem('access')
+    const value = await AsyncStorage.getItem('access');
     if(value !== null) {
       return true;
     } else {
@@ -25,4 +25,13 @@ const AuthContext = createContext();
 
 const isEmpty = (obj) => (Object.keys(obj).length === 0);
 
-export { static_host, showToast, isSignedIn, AuthContext, isEmpty } 
+const getToken = async () => {
+  try {
+    const data = await AsyncStorage.getItem('access');
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { static_host, showToast, isSignedIn, AuthContext, isEmpty, getToken } 
