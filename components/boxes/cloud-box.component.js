@@ -33,10 +33,7 @@ export const CloudBox = (props) => {
   return (
     <View style={cloudStyle(props.type)}>
       <Text>
-        damkldsakldm askllksaml kaslkmdasmkl
-        asda
-        sdasd
-        sdasdads
+        {props.content}
       </Text>
     </View>
   )

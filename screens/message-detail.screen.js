@@ -1,12 +1,14 @@
-import React, { useRef } from 'react';
-import { View, ScrollView, StyleSheet, TextInput } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, ScrollView, StyleSheet, TextInput, Text } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 import { GreyBox } from '../components/boxes/grey-box.component';
 import { SmallButton } from '../components/content/small-button.component';
 import { InputFeedback } from '../components/content/input-feedback.component';
 import { CloudBox } from '../components/boxes/cloud-box.component';
+import { static_host, getToken, isEmpty } from '../settings';
 
 const styles = StyleSheet.create({
   message_container: {
@@ -37,8 +39,78 @@ const styles = StyleSheet.create({
 
 export const MessageDetail = (props) => {
   const scrollViewRef = useRef();
-  const id = props.route.params.id;
-  console.log(id);
+  const [data, setData] = useState({});
+  const [userId, setUserId] = useState();
+  const [token, setToken] = useState('');
+
+  const convId = props.route.params.id;
+
+  const userUrl = `${static_host}/get_user_id/`
+  const dataUrl = `${static_host}/get_conversation/${convId}`
+
+
+  // getting token
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const t = await getToken()
+        setToken(t);
+      } catch (e) {
+        console.log('Błąd')
+      }
+    }
+    fetchToken();
+  }, [])
+
+  // getting current user id
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (token) {
+          const result = await axios.get(userUrl, {
+            headers: { Authorization: `Bearer ${token}` }
+          })
+          setUserId(result.data)
+        }
+      } catch (e) {
+        console.log('Błąd');
+      }
+    }
+    fetchData();
+  }, []);
+
+  // getting messages
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (token) {
+          const result = await axios.get(dataUrl, {
+            headers: { Authorization: `Bearer ${token}` }
+          })
+          setData(result.data);
+        }
+      } catch (e) {
+        console.log('Błąd');
+      }
+    }
+    fetchData();
+  }, [convId]);
+
+  let messages = <Text>{''}</Text>
+
+  if (!isEmpty(data)) {
+    messages = data.message.map(element => {
+      if (element.owner === userId)
+        return <View style={styles.cloud_wrapper} key={element.datetime}>
+          <CloudBox type="send" content={element.content} />
+        </View>
+      else {
+        return <View style={styles.cloud_wrapper} key={element.datetime}>
+          <CloudBox type="receive" content={element.content} />
+        </View>
+      }
+    })
+  } 
 
   return (
     <GreyBox>
@@ -47,24 +119,7 @@ export const MessageDetail = (props) => {
         ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
       >
-        <View style={styles.cloud_wrapper}>
-          <CloudBox type="send" />
-        </View>
-        <View style={styles.cloud_wrapper}>
-          <CloudBox type="received" />
-        </View>
-        <View style={styles.cloud_wrapper}>
-          <CloudBox type="send" />
-        </View>
-        <View style={styles.cloud_wrapper}>
-          <CloudBox type="received" />
-        </View>
-        <View style={styles.cloud_wrapper}>
-          <CloudBox type="received" />
-        </View>
-        <View style={styles.cloud_wrapper}>
-          <CloudBox type="send" />
-        </View>
+      {messages}
       </ScrollView>
       <Formik
         initialValues={{
