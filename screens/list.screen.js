@@ -30,7 +30,7 @@ export const ListScreen = (props) => {
       setData(result.data);
     }
     fetchData();
-  }, [url])``
+  }, [url])
 
   let list = <Text>{''}</Text>
   if (data) {
