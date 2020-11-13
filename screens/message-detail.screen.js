@@ -130,7 +130,19 @@ export const MessageDetail = (props) => {
           message: Yup.string().required('Required')
         })}
 
-        onSubmit={(values, actions) => {
+        onSubmit={async (values, actions) => {
+          const sendUrl = `${static_host}/send_message_conv_id/`
+          try {
+            if (token) {
+              const result = await axios.post(sendUrl, { content: values.message, id: convId },
+                { headers: { Authorization: `Bearer ${token}` }
+                })
+              setData(result.data)
+            }
+          } catch (e) {
+            console.log('Błąd');
+          }
+
           actions.resetForm()
         }}
       >

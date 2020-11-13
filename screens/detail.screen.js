@@ -7,7 +7,7 @@ import axios from 'axios';
 import { GreyBox } from '../components/boxes/grey-box.component';
 import { SmallButton } from '../components/content/small-button.component';
 import { InputFeedback } from '../components/content/input-feedback.component';
-import { static_host, isEmpty } from '../settings';
+import { static_host, isEmpty, getToken, showToast } from '../settings';
 
 const styles = StyleSheet.create({
   title: {
@@ -66,8 +66,23 @@ const styles = StyleSheet.create({
 export const DetailScreen = (props) => {
   const id = props.route.params.id;
   const [data, setData] = useState({});
-  const url = `${static_host}/mate_offer_detail/${id}`
+  const [token, setToken] = useState('');
+  const url = `${static_host}/mate_offer_detail/${id}`;
 
+  // getting token
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const t = await getToken()
+        setToken(t);
+      } catch (e) {
+        console.log('Błąd')
+      }
+    }
+    fetchToken();
+  }, []);
+
+  // getting data
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(url);
@@ -87,7 +102,7 @@ export const DetailScreen = (props) => {
       <Text style={styles.section_content} key={index}>{element}</Text>
     ))
   }
-
+  
   return (
     <GreyBox>
       <View>
@@ -130,7 +145,24 @@ export const DetailScreen = (props) => {
               message: Yup.string().required('Required')
             })}
 
-            onSubmit={(values, actions) => {
+            onSubmit={async (values, actions) => {
+              const sendUrl = `${static_host}/send_message/`
+              try {
+                if (token) {
+                  const result = await axios.post(sendUrl, { content: values.message, receiver: data.owner, subject: data.title },
+                    {
+                      headers: { Authorization: `Bearer ${token}` }
+                    })
+                  if (result.status === 200) {
+                    showToast('Message sent');
+                  } else {
+                    showToast('Error occured. Message not sent');
+                  }
+                }
+              } catch (e) {
+                console.log('Błąd');
+                console.log(e);
+              }
               actions.resetForm()
             }}
           >
