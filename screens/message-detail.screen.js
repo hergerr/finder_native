@@ -77,7 +77,7 @@ export const MessageDetail = (props) => {
       }
     }
     fetchData();
-  }, []);
+  }, [token]);
 
   // getting messages
   useEffect(() => {
@@ -94,7 +94,7 @@ export const MessageDetail = (props) => {
       }
     }
     fetchData();
-  }, [convId]);
+  }, [convId, token]);
 
   let messages = <Text>{''}</Text>
 
@@ -110,7 +110,7 @@ export const MessageDetail = (props) => {
         </View>
       }
     })
-  } 
+  }
 
   return (
     <GreyBox>
@@ -119,7 +119,7 @@ export const MessageDetail = (props) => {
         ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
       >
-      {messages}
+        {messages}
       </ScrollView>
       <Formik
         initialValues={{
