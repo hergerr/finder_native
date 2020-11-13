@@ -9,7 +9,7 @@ import { GreyBox } from '../components/boxes/grey-box.component';
 import { InputAndLabel } from '../components/content/input-and-label.component';
 import { InputFeedback } from '../components/content/input-feedback.component';
 import { BigButton } from '../components/content/big-button.component';
-import { getToken, static_host, isEmpty } from '../settings';
+import { getToken, static_host, isEmpty, showToast } from '../settings';
 
 const styles = StyleSheet.create({
   container: {
@@ -102,7 +102,7 @@ export const AddScreen = (props) => {
             phone: '',
           }}
 
-          onSubmit={(values, actions) => {
+          onSubmit={ async (values, actions) => {
             let data = new FormData();
             data.append('image', {
               uri: file.uri,
@@ -122,18 +122,15 @@ export const AddScreen = (props) => {
               Authorization: `Bearer ${token}`
             }
 
-            axios.post(`${static_host}/user_mate_detail/`, data, { headers })
-              .then(res => {
-              }).catch(error => {
-                const errors = error.response.data;
-                let message = '';
-                for (const type in errors) {
-                  message = message.concat(`${errors[type]}`)
-                }
-                message = message.replace(/,/g, '\n');
-                console.log(message);
-              });
-            // actions.resetForm()
+            // https://stackoverflow.com/a/62919175/12422260
+            const response = await axios.post(`${static_host}/user_mate_detail/`, data, { headers });
+            if (response.status === 201){
+              showToast('New offer added');
+              setFile({});
+              actions.resetForm()
+            } else {
+              showToast('Pass correct data');
+            }
           }}
 
           validationSchema={Yup.object({
@@ -164,8 +161,6 @@ export const AddScreen = (props) => {
               {touched.title && errors.title ? (
                 <InputFeedback text={errors.title} />
               ) : <InputFeedback text="" />}
-
-
               <InputAndLabel label="Age"
                 keyboardType="number-pad"
                 onChangeText={handleChange('age')}
