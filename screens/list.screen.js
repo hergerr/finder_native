@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { GreyBox } from '../components/boxes/grey-box.component';
 import { ListCard } from '../components/boxes/list-card.component';
-import { static_host, isEmpty } from '../settings';
+import { static_host } from '../settings';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,7 +30,7 @@ export const ListScreen = (props) => {
       setData(result.data);
     }
     fetchData();
-  }, [url])
+  }, [url])``
 
   let list = <Text>{''}</Text>
   if (data) {

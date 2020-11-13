@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { CardContent } from '../content/card-content.component';
 import { static_host } from '../../settings';
@@ -19,12 +19,11 @@ const styles = StyleSheet.create({
   }
 })
 
-const HeartButtom = (props) => (
-  <Icon.Button name="hearto" backgroundColor="white" color="black" />
+const BinButton = (props) => (
+  <Icon.Button name="trash-o" backgroundColor="white" color="black" />
 );
 
-
-export const ListCard = (props) => {
+export const LikedCard = (props) => {
   const url = `${static_host}${props.image}`;
   const navigation = useNavigation();
 
@@ -39,7 +38,7 @@ export const ListCard = (props) => {
       }}>
       <CardContent {...props} url={url}/>
       <View style={styles.heart_wrapper}>
-        <HeartButtom />
+        <BinButton />
       </View>
 
     </TouchableOpacity>

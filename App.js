@@ -18,6 +18,7 @@ import { DetailScreen } from './screens/detail.screen';
 import { MessageListScreen } from './screens/message-list.screen';
 import { MessageDetail } from './screens/message-detail.screen';
 import { AddScreen } from './screens/add.screen';
+import { LikedScreen } from './screens/liked.screen';
 import { isSignedIn, AuthContext } from './settings';
 
 const Drawer = createDrawerNavigator();
@@ -109,6 +110,8 @@ const App = () => {
                 {/* only user - visible */}
                 <Drawer.Screen name="My Messages" component={MessageListScreen} />
                 <Drawer.Screen name="Add Mate" component={AddScreen} />
+                <Drawer.Screen name="Liked offers" component={LikedScreen} />
+                
 
                 {/* only user - invisible */}
                 <Drawer.Screen name="MessageDetail" component={MessageDetail} />
