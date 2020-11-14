@@ -19,9 +19,12 @@ const styles = StyleSheet.create({
   }
 })
 
-const HeartButtom = (props) => (
-  <Icon.Button name="hearto" backgroundColor="white" color="black" />
-);
+const HeartButtom = (props) => {
+  if (props.liked)
+    return <Icon.Button name="heart" backgroundColor="white" color="black" />
+  else
+    return <Icon.Button name="hearto" backgroundColor="white" color="black" />
+};
 
 
 export const ListCard = (props) => {
@@ -37,9 +40,9 @@ export const ListCard = (props) => {
           id: props.id
         })
       }}>
-      <CardContent {...props} url={url}/>
+      <CardContent {...props} url={url} />
       <View style={styles.heart_wrapper}>
-        <HeartButtom />
+        <HeartButtom liked={props.liked}/>
       </View>
 
     </TouchableOpacity>
