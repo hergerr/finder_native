@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { CardContent } from '../content/card-content.component';
-import { static_host } from '../../settings';
+import { static_host, getToken } from '../../settings';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,13 +19,30 @@ const styles = StyleSheet.create({
   }
 })
 
-const BinButton = (props) => (
-  <Icon.Button name="trash-o" backgroundColor="white" color="black" />
-);
 
 export const LikedCard = (props) => {
   const url = `${static_host}${props.image}`;
   const navigation = useNavigation();
+  const [token, setToken] = useState();
+
+  // getting token
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const t = await getToken()
+        setToken(t);
+      } catch (e) {
+        console.log('Błąd')
+        console.log(e);
+      }
+    }
+    fetchToken();
+  }, []);
+
+
+  const BinButton = (props) => (
+    <Icon.Button name="trash-o" backgroundColor="white" color="black" onPress={() => props.deleteCard(props.id)}/>
+  );
 
   return (
     <TouchableOpacity
@@ -36,9 +53,9 @@ export const LikedCard = (props) => {
           id: props.id
         })
       }}>
-      <CardContent {...props} url={url}/>
+      <CardContent {...props} url={url} />
       <View style={styles.heart_wrapper}>
-        <BinButton />
+        <BinButton id={props.id} deleteCard={props.deleteCard}/>
       </View>
 
     </TouchableOpacity>

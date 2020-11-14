@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { GreyBox } from '../components/boxes/grey-box.component';
 import { LikedCard } from '../components/boxes/liked-card.component';
-import { static_host, getToken } from '../settings';
+import { static_host, getToken, showToast } from '../settings';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,13 +53,33 @@ export const LikedScreen = (props) => {
     fetchData();
   }, [token]);
 
-  console.log(data)
+  const deleteCard = async (id) => {
+    const url = `${static_host}/delete_liked_mate_offer/`
+    try {
+      if (token) {
+        const result = await axios.delete(url,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            data:  { id: id }
+          }
+          )
+        if (result.status === 200) {
+          showToast('Offer deleted from liked')
+        } else {
+          showToast('Error occured while deleting from liked')
+        }
+        setData(result.data)
+      }
+    } catch (e) {
+      console.log('Błąd');
+    }
+  }
 
   let list = <Text>{''}</Text>
   if (data) {
     list = data.map((element, index) => {
       return <View style={styles.card_wrapper} key={index}>
-        <LikedCard {...element} />
+        <LikedCard {...element} deleteCard={deleteCard}/>
       </View>
     })
   }
