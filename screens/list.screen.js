@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import axios from 'axios';
+import { useIsFocused } from "@react-navigation/native";
 
 import { GreyBox } from '../components/boxes/grey-box.component';
 import { ListCard } from '../components/boxes/list-card.component';
@@ -24,8 +25,10 @@ export const ListScreen = (props) => {
   const [favIds, setFavIds] = useState([]);
   const [token, setToken] = useState();
   const url = `${static_host}/search_mates/?ageFrom=${params.ageFrom}&ageTo=${params.ageTo}&district=${params.district}&features=${params.keyCustoms}&customs=${params.keyCustoms}`
+  const isFocused = useIsFocused();
 
   // getting token
+  // https://stackoverflow.com/a/62703838/12422260
   useEffect(() => {
     const fetchToken = async () => {
       try {
@@ -36,7 +39,7 @@ export const ListScreen = (props) => {
       }
     }
     fetchToken();
-  }, [])
+  }, [isFocused])
 
   // getting data
   // https://pl.reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect
@@ -46,7 +49,7 @@ export const ListScreen = (props) => {
       setData(result.data);
     }
     fetchData();
-  }, [url])
+  }, [url, isFocused])
 
 
   useEffect(() => {
@@ -65,12 +68,16 @@ export const ListScreen = (props) => {
 
       } else {
         console.log('Ni mo tokena');
+        setFavIds([]);
       }
-    }
+    } 
 
     fetchData();
 
   }, [data])
+
+  console.log(favIds);
+  console.log(token);
 
 
   let list = <Text>{''}</Text>

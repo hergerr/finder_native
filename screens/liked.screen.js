@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { useIsFocused } from "@react-navigation/native";
 import axios from 'axios';
 
 import { GreyBox } from '../components/boxes/grey-box.component';
@@ -22,6 +23,7 @@ export const LikedScreen = (props) => {
   const [data, setData] = useState([]);
   const [token, setToken] = useState();
   const url = `${static_host}/get_liked_mate_offers/`
+  const isFocused = useIsFocused();
 
   // getting token
   useEffect(() => {
@@ -51,7 +53,7 @@ export const LikedScreen = (props) => {
       }
     }
     fetchData();
-  }, [token]);
+  }, [token, isFocused]);
 
   const deleteCard = async (id) => {
     const url = `${static_host}/delete_liked_mate_offer/`
