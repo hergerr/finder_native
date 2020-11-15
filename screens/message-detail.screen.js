@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, ScrollView, StyleSheet, TextInput, Text } from 'react-native';
 import { Formik } from 'formik';
+import { useIsFocused } from "@react-navigation/native";
 import * as Yup from 'yup';
 import axios from 'axios';
 
@@ -42,6 +43,8 @@ export const MessageDetail = (props) => {
   const [data, setData] = useState({});
   const [userId, setUserId] = useState();
   const [token, setToken] = useState('');
+  const isFocused = useIsFocused();
+
 
   const convId = props.route.params.id;
 
@@ -94,7 +97,7 @@ export const MessageDetail = (props) => {
       }
     }
     fetchData();
-  }, [convId, token]);
+  }, [convId, token, isFocused]);
 
   let messages = <Text>{''}</Text>
 
