@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { useIsFocused } from "@react-navigation/native";
 import axios from 'axios';
+import { useIsFocused } from "@react-navigation/native";
 
 import { GreyBox } from '../components/boxes/grey-box.component';
-import { LikedCard } from '../components/boxes/liked-card.component';
+import { OfferCard } from '../components/boxes/offer-card.component';
 import { static_host, getToken, showToast } from '../settings';
 
 const styles = StyleSheet.create({
@@ -19,45 +19,45 @@ const styles = StyleSheet.create({
   }
 })
 
-export const LikedScreen = (props) => {
+export const OfferScreen = (props) => {
   const [data, setData] = useState([]);
   const [token, setToken] = useState();
-  const url = `${static_host}/get_liked_mate_offers/`
   const isFocused = useIsFocused();
 
   // getting token
+  // https://stackoverflow.com/a/62703838/12422260
   useEffect(() => {
     const fetchToken = async () => {
       try {
         const t = await getToken()
         setToken(t);
       } catch (e) {
-        console.log('Błąd')
+        console.log('Bład')
       }
     }
     fetchToken();
-  }, [])
+  }, [isFocused])
 
   // getting data
+  // https://pl.reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect
   useEffect(() => {
+    const url = `${static_host}/user_mate_list/`;
+
     const fetchData = async () => {
-      try {
-        if (token) {
-          const result = await axios.get(url, {
-            headers: { Authorization: `Bearer ${token}` }
-          })
-          setData(result.data)
-        }
-      } catch (e) {
-        console.log('Błąd');
+      if (token) {
+        const result = await axios.get(url, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setData(result.data);
       }
     }
     fetchData();
-  }, [token, isFocused]);
+  }, [isFocused])
 
-  // getting liked ids
+
   const deleteCard = async (id) => {
-    const url = `${static_host}/delete_liked_mate_offer/`
+    const url = `${static_host}/user_mate_detail/`
+
     try {
       if (token) {
         const result = await axios.delete(url,
@@ -67,14 +67,15 @@ export const LikedScreen = (props) => {
           }
           )
         if (result.status === 200) {
-          showToast('Offer deleted from liked')
+          showToast('Offer deleted')
         } else {
-          showToast('Error occured while deleting from liked')
+          showToast('Error occured while deleting offer')
         }
         setData(result.data)
       }
     } catch (e) {
       console.log('Błąd');
+      console.log(e);
     }
   }
 
@@ -82,7 +83,7 @@ export const LikedScreen = (props) => {
   if (data) {
     list = data.map((element, index) => {
       return <View style={styles.card_wrapper} key={index}>
-        <LikedCard {...element} deleteCard={deleteCard}/>
+        <OfferCard {...element} deleteCard={deleteCard} />
       </View>
     })
   }

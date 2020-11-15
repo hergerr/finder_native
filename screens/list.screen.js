@@ -76,10 +76,6 @@ export const ListScreen = (props) => {
 
   }, [data])
 
-  console.log(favIds);
-  console.log(token);
-
-
   let list = <Text>{''}</Text>
   if (data) {
     list = data.map((element, index) => {
