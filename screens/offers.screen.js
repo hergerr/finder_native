@@ -36,7 +36,7 @@ export const OfferScreen = (props) => {
       }
     }
     fetchToken();
-  }, [isFocused])
+  }, [])
 
   // getting data
   // https://pl.reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect
@@ -52,7 +52,8 @@ export const OfferScreen = (props) => {
       }
     }
     fetchData();
-  }, [isFocused])
+  }, [token, isFocused])
+
 
 
   const deleteCard = async (id) => {

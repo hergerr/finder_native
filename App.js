@@ -20,6 +20,7 @@ import { MessageDetail } from './screens/message-detail.screen';
 import { AddScreen } from './screens/add.screen';
 import { LikedScreen } from './screens/liked.screen';
 import { OfferScreen } from './screens/offers.screen';
+import { EditScreen } from './screens/edit.screen';
 import { isSignedIn, AuthContext } from './settings';
 
 const Drawer = createDrawerNavigator();
@@ -81,7 +82,8 @@ const App = () => {
     const { state, ...rest } = props;
     const newState = { ...state }
     newState.routes = newState.routes.filter(item =>
-      (item.name !== 'MessageDetail' && item.name !== 'DetailScreen' && item.name !== 'ListScreen'))
+      (item.name !== 'MessageDetail' && item.name !== 'DetailScreen' && item.name !== 'ListScreen'
+      && item.name !== 'EditMate'))
 
     return (
       <DrawerContentScrollView {...props}>
@@ -117,6 +119,7 @@ const App = () => {
 
                 {/* only user - invisible */}
                 <Drawer.Screen name="MessageDetail" component={MessageDetail} />
+                <Drawer.Screen name="EditScreen" component={EditScreen} />
 
               </>
             ) : (

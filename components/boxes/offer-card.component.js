@@ -45,7 +45,9 @@ export const OfferCard = (props) => {
   );
 
   const EditButton = (props) => (
-    <Icon.Button name="edit" backgroundColor="white" color="black" onPress={() => navigation.navigate('Add Mate')}/>
+    <Icon.Button name="edit" backgroundColor="white" color="black" onPress={() => {
+      navigation.navigate('EditScreen', {id: props.id})
+    }}/>
   )
 
   return (
@@ -60,7 +62,7 @@ export const OfferCard = (props) => {
       <CardContent {...props} url={url} />
       <View style={styles.heart_wrapper}>
         <BinButton id={props.id} deleteCard={props.deleteCard}/>
-        <EditButton />
+        <EditButton id={props.id}/>
       </View>
 
     </TouchableOpacity>
