@@ -83,7 +83,7 @@ const App = () => {
     const newState = { ...state }
     newState.routes = newState.routes.filter(item =>
       (item.name !== 'MessageDetail' && item.name !== 'DetailScreen' && item.name !== 'ListScreen'
-      && item.name !== 'EditMate'))
+      && item.name !== 'EditScreen'))
 
     return (
       <DrawerContentScrollView {...props}>
