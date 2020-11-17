@@ -12,7 +12,6 @@ import { InputAndLabel } from '../components/content/input-and-label.component';
 import { InputFeedback } from '../components/content/input-feedback.component';
 import { BigButton } from '../components/content/big-button.component';
 import { getToken, static_host, isEmpty, showToast } from '../settings';
-import { set } from 'react-native-reanimated';
 
 const styles = StyleSheet.create({
   container: {
